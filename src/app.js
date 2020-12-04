@@ -1,13 +1,43 @@
-import Tesseract from 'tesseract.js';
+import Tesseract from 'tesseract.js'; //Підключення бібліотеки
 import { Log } from './Log';
 import defaultImage from './helloworld.jpg';
 
-// Переменная для хранения выбранного файла
+const intro = introJs();
+
+intro.setOptions({
+  steps: [
+    {
+      intro: 'Пропонуємо пройти короткий інструктаж користування програмою'
+    },
+    {
+      element: '#fileBtn',
+      intro: 'Для того щоб обрати файл натисніть на цю кнопку'
+    },
+    {
+      element: '#preview',
+      intro: 'В даному полі ви побачите обране зображення'
+    },
+    {
+      element: '#start',
+      intro: 'Натисніть на цю кнопку для початку розпізнавання'
+    },
+    {
+      element: '#log',
+      intro: 'Після завершення розпізнавання, результат зявиться у цьому полі'
+    },
+    {
+      intro: 'Приємного користування!'
+    },
+  ]
+})
+
+intro.start();
+
+// Змінна для зберігання обраного файлу
 let file;
 const lang = {value: 'eng',text: 'English',}
 
-// Селект для выбора языков
-// Инпут для загрузки файлов и активация drag-n-drop зоны
+// Інпут для завантаження файлів і активація drag-n-drop зони
 const preview = document.getElementById('preview');
 const input = document.getElementById('file');
 
@@ -24,16 +54,16 @@ input.addEventListener('change', () => {
   createPreview(file);
 });
 
-// Установка изображения по умолчанию
+// Установка зображення за замовчуванням
 file = preview.src = defaultImage;
 
-// Кнопка Начать обработку
+// Кнопка початку розпізнавання
 const start = document.getElementById('start');
 
 // Лог
 const log = Log(document.getElementById('log'));
 
-// Функция распознавания текста
+// Функція розпізнавання тексту
 function recognize(file) {
   return Tesseract.recognize(file, 'eng', {
     logger: (data) => {
@@ -45,22 +75,22 @@ function recognize(file) {
   });
 }
 
-// Начать обработку по клику на кнопку
+  // Почати обробку при натисканні на кнопку
 start.addEventListener('click', () => {
-  // Заблокировать кнопку
+  // Заблокувати кнопку
   start.disabled = true;
 
   recognize(file, 'eng')
   .then((data) => {
-      // По окончании обработки вывести результат
+      // Після закінчення обробки вивести результат
       log.clear();
       log.setResult(data);
     })
   .catch((err) => {
-    console.error(err);
+    alert("Нажаль відбулась помилка розпізнавання");
   })
   .finally(() => {
-      // Разблокировать кнопку
+      // Розблокувати кнопку
       start.disabled = false;
     });
 });

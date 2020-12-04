@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Character recognition</title>
     <meta name="description" content="Распознавание текста с изображений с Tesseract.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.1.0/introjs.min.css"/>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="page">
-      <div class="result">
+      <div class="result" >
         <div class="result__preview text-center">
           <img id="preview" width="400" src="" />
 
           <div>
-            <label for="file" class="btn btn-secondary">
-              Обрати файл
+            <label for="file" id="fileBtn" class="btn btn-secondary">
+              <p>Обрати файл</p>
               <input type="file" id="file" />
             </label>
             <br />
@@ -33,5 +34,6 @@
       </div>
     </div>
     <script src="app.js" async></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.1.0/intro.min.js"></script>
   </body>
 </html>
